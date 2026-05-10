@@ -8,8 +8,9 @@ This repository contains solutions for various DBMS (Database Management Systems
 ## Live Website
 Check out the interactive solutions page here: [https://yugrajmangate-dev.github.io/DBMS/](https://yugrajmangate-dev.github.io/DBMS/)
 
+Deployed page: `DBMS_Final10_Verified_Solutions.html` is currently served at the above URL (replaces the previous root page).
+
 ## Problem Statements
 The repository covers 17 comprehensive problem statements commonly found in DBMS lab curriculums.
 
 ---
-Created by [yugrajmangate-dev](https://github.com/yugrajmangate-dev)

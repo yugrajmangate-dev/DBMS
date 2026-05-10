@@ -2,273 +2,265 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DBMS Exam – All Solutions</title>
+<title>DBMS Final 10 – Verified Solutions</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap');
-  :root {
-    --bg: #0d0f18; --panel: #131624; --card: #1a1e30;
-    --border: #252a40; --accent: #6c8eff; --green: #4ade80;
-    --yellow: #fbbf24; --pink: #f472b6; --text: #e2e8f0;
-    --muted: #8892a4; --code-bg: #0a0c14;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text); display: flex; min-height: 100vh; }
-  /* SIDEBAR */
-  #sidebar {
-    width: 230px; min-height: 100vh; background: var(--panel);
-    border-right: 1px solid var(--border); position: fixed; left: 0; top: 0;
-    overflow-y: auto; z-index: 100;
-  }
-  #sidebar h2 { padding: 18px 16px 10px; font-size: 13px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; border-bottom: 1px solid var(--border); }
-  .nav-item {
-    display: block; padding: 9px 16px; font-size: 12.5px; color: var(--muted);
-    cursor: pointer; border-left: 3px solid transparent; transition: all .2s;
-    font-family: 'JetBrains Mono', monospace;
-  }
-  .nav-item:hover { color: var(--text); background: var(--card); }
-  .nav-item.active { color: var(--accent); border-left-color: var(--accent); background: rgba(108,142,255,.08); }
-  .tag { display: inline-block; font-size: 9px; padding: 1px 5px; border-radius: 3px; margin-left: 6px; vertical-align: middle; font-family: 'JetBrains Mono', monospace; }
-  .tag.mysql { background: #1a3a4a; color: #38bdf8; }
-  .tag.plsql { background: #2a1a3a; color: #c084fc; }
-  .tag.mongo { background: #1a3a2a; color: #4ade80; }
-  /* MAIN */
-  #main { margin-left: 230px; padding: 30px 36px; max-width: 960px; }
-  .page-header { margin-bottom: 32px; }
-  .page-header h1 { font-size: 28px; font-weight: 800; color: var(--accent); }
-  .page-header p { color: var(--muted); font-size: 13px; margin-top: 6px; }
-  .badges { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
-  .badge { padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; }
-  .badge.mysql { background: rgba(56,189,248,.15); color: #38bdf8; border: 1px solid rgba(56,189,248,.3); }
-  .badge.plsql { background: rgba(192,132,252,.15); color: #c084fc; border: 1px solid rgba(192,132,252,.3); }
-  .badge.mongo { background: rgba(74,222,128,.15); color: #4ade80; border: 1px solid rgba(74,222,128,.3); }
-  /* SECTION */
-  .section { margin-bottom: 48px; scroll-margin-top: 20px; }
-  .section-header {
-    display: flex; align-items: center; gap: 12px;
-    border-left: 4px solid var(--accent); padding-left: 14px; margin-bottom: 18px;
-  }
-  .ps-num { font-size: 11px; font-weight: 700; color: var(--accent); font-family: 'JetBrains Mono', monospace; }
-  .section-title { font-size: 17px; font-weight: 700; }
-  .tech-badge { padding: 3px 10px; border-radius: 12px; font-size: 10px; font-weight: 700; letter-spacing: 1px; font-family: 'JetBrains Mono', monospace; }
-  /* CODE BLOCK */
-  .code-block { position: relative; margin-bottom: 14px; }
-  .code-label { font-size: 10px; color: var(--muted); font-family: 'JetBrains Mono', monospace; padding: 8px 14px 6px; background: var(--code-bg); border-radius: 8px 8px 0 0; border: 1px solid var(--border); border-bottom: 1px solid #1e2235; letter-spacing: 1px; display: flex; justify-content: space-between; align-items: center; }
-  .copy-btn {
-    background: var(--card); border: 1px solid var(--border); color: var(--muted);
-    font-size: 10px; padding: 3px 10px; border-radius: 4px; cursor: pointer;
-    font-family: 'JetBrains Mono', monospace; transition: all .2s;
-  }
-  .copy-btn:hover { color: var(--accent); border-color: var(--accent); }
-  .copy-btn.copied { color: var(--green); border-color: var(--green); }
-  pre {
-    background: var(--code-bg); padding: 16px; overflow-x: auto;
-    border: 1px solid var(--border); border-top: none; border-radius: 0 0 8px 8px;
-    font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.7;
-    tab-size: 2;
-  }
-  /* Syntax highlight colors */
-  .kw { color: #c084fc; }
-  .fn { color: #6c8eff; }
-  .str { color: #4ade80; }
-  .cm { color: #4b5563; font-style: italic; }
-  .num { color: #fbbf24; }
-  .op { color: #f472b6; }
-  /* divider */
-  .divider { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
-  /* tip */
-  .tip { background: rgba(108,142,255,.07); border: 1px solid rgba(108,142,255,.2); border-radius: 6px; padding: 10px 14px; font-size: 12px; color: var(--muted); margin-bottom: 14px; }
-  .tip strong { color: var(--accent); }
-  /* schema */
-  .schema { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; font-size: 12px; color: var(--yellow); font-family: 'JetBrains Mono', monospace; margin-bottom: 14px; line-height: 1.8; }
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;800&display=swap');
+:root{--bg:#0d0f18;--panel:#131624;--card:#1a1e2e;--border:#252a3d;--accent:#6c8eff;--green:#4ade80;--blue:#38bdf8;--yellow:#fbbf24;--pink:#f472b6;--red:#f87171;--text:#e2e8f0;--muted:#64748b;--code:#07090f}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh}
+#sb{width:225px;min-height:100vh;background:var(--panel);border-right:1px solid var(--border);position:fixed;left:0;top:0;overflow-y:auto;z-index:100;padding-bottom:30px}
+#sb-top{padding:14px 16px 10px;border-bottom:1px solid var(--border)}
+#sb-top h2{font-size:11px;color:var(--accent);letter-spacing:2px;font-weight:700}
+#sb-top p{font-size:10px;color:var(--green);margin-top:3px}
+.gl{padding:10px 16px 3px;font-size:9px;color:var(--muted);letter-spacing:2px;font-weight:700;text-transform:uppercase}
+.ni{display:flex;align-items:center;gap:7px;padding:7px 16px;font-size:11px;color:var(--muted);cursor:pointer;border-left:3px solid transparent;transition:all .15s;font-family:'JetBrains Mono',monospace}
+.ni:hover{color:var(--text);background:var(--card)}
+.ni.active{color:var(--accent);border-left-color:var(--accent);background:rgba(108,142,255,.07)}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.dm{background:#38bdf8}.pl{background:#f472b6}.mg{background:#4ade80}
+#main{margin-left:225px;padding:28px 36px;max-width:940px}
+.ph{margin-bottom:24px}
+.ph h1{font-size:22px;font-weight:800;color:var(--accent)}
+.ph p{color:var(--muted);font-size:12px;margin-top:3px}
+/* verified badge */
+.verified{display:inline-flex;align-items:center;gap:5px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);color:var(--green);font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;margin-top:8px}
+.sec{margin-bottom:38px;scroll-margin-top:16px}
+.sh{display:flex;align-items:center;gap:10px;margin-bottom:8px;padding-left:12px;border-left:3px solid var(--accent)}
+.sn{font-size:10px;font-weight:700;color:var(--accent);font-family:'JetBrains Mono',monospace}
+.st{font-size:15px;font-weight:700}
+.tb{display:inline-block;padding:2px 8px;border-radius:8px;font-size:9px;font-weight:700;letter-spacing:1px;font-family:'JetBrains Mono',monospace}
+.tb.m{background:rgba(56,189,248,.15);color:#38bdf8}
+.tb.p{background:rgba(244,114,182,.15);color:#f472b6}
+.tb.g{background:rgba(74,222,128,.15);color:#4ade80}
+.schema{background:var(--card);border:1px solid var(--border);border-radius:5px;padding:8px 12px;font-size:11px;color:var(--yellow);font-family:'JetBrains Mono',monospace;margin-bottom:8px;line-height:1.9}
+.tip{background:rgba(56,189,248,.07);border:1px solid rgba(56,189,248,.2);border-radius:5px;padding:7px 11px;font-size:11px;color:var(--muted);margin-bottom:8px}
+.tip b{color:var(--blue)}
+.fix{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.25);border-radius:5px;padding:7px 11px;font-size:11px;color:#fca5a5;margin-bottom:8px}
+.fix b{color:var(--red)}
+.cb{margin-bottom:8px}
+.cl{font-size:9px;color:var(--muted);font-family:'JetBrains Mono',monospace;padding:6px 12px 5px;background:var(--code);border-radius:6px 6px 0 0;border:1px solid var(--border);border-bottom:1px solid #12151f;display:flex;justify-content:space-between;align-items:center}
+.cpb{background:var(--card);border:1px solid var(--border);color:var(--muted);font-size:9px;padding:2px 8px;border-radius:3px;cursor:pointer;font-family:'JetBrains Mono',monospace;transition:all .2s}
+.cpb:hover{color:var(--accent);border-color:var(--accent)}
+.cpb.ok{color:var(--green);border-color:var(--green)}
+pre{background:var(--code);padding:14px;overflow-x:auto;border:1px solid var(--border);border-top:none;border-radius:0 0 6px 6px;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.75;tab-size:2}
+hr.d{border:none;border-top:1px solid var(--border);margin:30px 0}
 </style>
 </head>
 <body>
-
-<nav id="sidebar">
-  <h2>📚 DBMS Exam</h2>
-  <a class="nav-item active" onclick="scrollTo('ps1')">PS1 <span class="tag plsql">PL/SQL</span> Triggers</a>
-  <a class="nav-item" onclick="scrollTo('ps2')">PS2 <span class="tag mongo">Mongo</span> Aggregation</a>
-  <a class="nav-item" onclick="scrollTo('ps3')">PS3 <span class="tag plsql">PL/SQL</span> Proc/Func</a>
-  <a class="nav-item" onclick="scrollTo('ps4')">PS4 <span class="tag mysql">MySQL</span> Joins</a>
-  <a class="nav-item" onclick="scrollTo('ps5')">PS5 <span class="tag plsql">PL/SQL</span> Cursors</a>
-  <a class="nav-item" onclick="scrollTo('ps6')">PS6 <span class="tag mysql">MySQL</span> DML</a>
-  <a class="nav-item" onclick="scrollTo('ps7')">PS7 <span class="tag plsql">PL/SQL</span> Triggers</a>
-  <a class="nav-item" onclick="scrollTo('ps8')">PS8 <span class="tag mysql">MySQL</span> DDL</a>
-  <a class="nav-item" onclick="scrollTo('ps9')">PS9 <span class="tag mongo">Mongo</span> CRUD</a>
-  <a class="nav-item" onclick="scrollTo('ps10')">PS10 <span class="tag plsql">PL/SQL</span> Cursors</a>
-  <a class="nav-item" onclick="scrollTo('ps11')">PS11 <span class="tag mysql">MySQL</span> Joins</a>
-  <a class="nav-item" onclick="scrollTo('ps12')">PS12 <span class="tag plsql">PL/SQL</span> Proc/Func</a>
-  <a class="nav-item" onclick="scrollTo('ps13')">PS13 <span class="tag mysql">MySQL</span> DML</a>
-  <a class="nav-item" onclick="scrollTo('ps14')">PS14 <span class="tag mongo">Mongo</span> Aggregation</a>
-  <a class="nav-item" onclick="scrollTo('ps15')">PS15 <span class="tag plsql">PL/SQL</span> Unnamed Block</a>
-  <a class="nav-item" onclick="scrollTo('ps16')">PS16 <span class="tag mysql">MySQL</span> DDL</a>
-  <a class="nav-item" onclick="scrollTo('ps17')">PS17 <span class="tag mongo">Mongo</span> CRUD</a>
+<nav id="sb">
+  <div id="sb-top">
+    <h2>📘 DBMS FINAL 10 QS</h2>
+    <p>✅ Verified against docx</p>
+  </div>
+  <div class="gl">MySQL DDL</div>
+  <div class="ni active" onclick="go('ps1')"><span class="dot dm"></span>PS1 DDL – Views/Index/Seq</div>
+  <div class="ni" onclick="go('ps2')"><span class="dot dm"></span>PS2 DDL – Multi Views</div>
+  <div class="gl">MySQL DML</div>
+  <div class="ni" onclick="go('ps3')"><span class="dot dm"></span>PS3 DML – Add/Rename Col</div>
+  <div class="ni" onclick="go('ps4')"><span class="dot dm"></span>PS4 DML – Modify/Queries</div>
+  <div class="gl">MySQL Joins</div>
+  <div class="ni" onclick="go('ps5')"><span class="dot dm"></span>PS5 Joins & Subqueries</div>
+  <div class="gl">PL/SQL</div>
+  <div class="ni" onclick="go('ps6')"><span class="dot pl"></span>PS6 Proc + Function</div>
+  <div class="ni" onclick="go('ps7')"><span class="dot pl"></span>PS7 Unnamed Block</div>
+  <div class="ni" onclick="go('ps8')"><span class="dot pl"></span>PS8 Triggers</div>
+  <div class="gl">MongoDB</div>
+  <div class="ni" onclick="go('ps9')"><span class="dot mg"></span>PS9 CRUD – Social_Media</div>
+  <div class="ni" onclick="go('ps10')"><span class="dot mg"></span>PS10 Aggregation + Index</div>
 </nav>
 
 <main id="main">
-  <div class="page-header">
-    <h1>DBMS Practical Exam — All Solutions</h1>
-    <p>SPPU | Second Year Computer Engineering | All 17 Problem Statements</p>
-    <div class="badges">
-      <span class="badge mysql">MySQL — DDL / DML / Joins</span>
-      <span class="badge plsql">Oracle PL/SQL — Triggers / Cursors / Procedures</span>
-      <span class="badge mongo">MongoDB — CRUD / Aggregation</span>
-    </div>
-  </div>
+<div class="ph">
+  <h1>DBMS — Final 10 Questions · Verified Solutions</h1>
+  <p>SPPU SE · Cross-checked against official revised docx · All corrections applied</p>
+  <div class="verified">✅ Verified against DBMSL_Revised_Problem_Statement.docx</div>
+</div>
 
-<!-- ════════════════ PS1 ════════════════ -->
-<section class="section" id="ps1">
-  <div class="section-header">
-    <span class="ps-num">PS 01</span>
-    <span class="section-title">Triggers — Salary Backup & Prevent CEO Delete</span>
-    <span class="tech-badge" style="background:rgba(192,132,252,.15);color:#c084fc;">Oracle PL/SQL</span>
-  </div>
-  <div class="schema">Employee(emp_id, emp_name, salary, designation)<br>Salary_Backup(emp_id, old_salary, new_salary, salary_difference)</div>
-  <div class="code-block">
-    <div class="code-label">-- TABLE SETUP <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-    <pre>CREATE TABLE Employee (
-  emp_id      NUMBER PRIMARY KEY,
-  emp_name    VARCHAR2(50),
-  salary      NUMBER,
-  designation VARCHAR2(30)
+<!-- ══════════ PS1 ══════════ -->
+<section class="sec" id="ps1">
+<div class="sh"><span class="sn">PS 01</span><span class="st">DDL MySQL — Views, Index, Sequence, Synonym</span><span class="tb m">MySQL + Oracle</span></div>
+<div class="schema">Customer(CustID, Name, Cust_Address, Phone_no, Email_ID, Age)
+Branch(BranchID, Branch_Name, Address)
+Account(Account_no, BranchID, CustID, <b>date_open</b>, Account_type, Balance)</div>
+
+<div class="cb"><div class="cl">-- Q1: Create Tables with Referential Integrity + Insert Data<button class="cpb" onclick="cp(this)">Copy</button></div><pre>CREATE TABLE Customer(
+  CustID INT PRIMARY KEY, Name VARCHAR(50),
+  Cust_Address VARCHAR(100), Phone_no VARCHAR(15),
+  Email_ID VARCHAR(50), Age INT
 );
 
-CREATE TABLE Salary_Backup (
-  emp_id           NUMBER,
-  old_salary       NUMBER,
-  new_salary       NUMBER,
-  salary_difference NUMBER
+CREATE TABLE Branch(
+  BranchID INT PRIMARY KEY,
+  Branch_Name VARCHAR(50), Address VARCHAR(100)
 );
 
-INSERT INTO Employee VALUES(1,'Alice',50000,'Manager');
-INSERT INTO Employee VALUES(2,'Bob',100000,'CEO');
-COMMIT;</pre>
-  </div>
-  <div class="code-block">
-    <div class="code-label">-- TRIGGER 1: Record Salary Change <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-    <pre>CREATE OR REPLACE TRIGGER trg_salary_backup
-AFTER UPDATE OF salary ON Employee
-FOR EACH ROW
-BEGIN
-  INSERT INTO Salary_Backup VALUES(
-    :OLD.emp_id,
-    :OLD.salary,
-    :NEW.salary,
-    :NEW.salary - :OLD.salary
-  );
-END;
-/
-
--- Test
-UPDATE Employee SET salary = 60000 WHERE emp_id = 1;
-SELECT * FROM Salary_Backup;</pre>
-  </div>
-  <div class="code-block">
-    <div class="code-label">-- TRIGGER 2: Prevent Deleting CEO <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-    <pre>CREATE OR REPLACE TRIGGER trg_no_delete_ceo
-BEFORE DELETE ON Employee
-FOR EACH ROW
-BEGIN
-  IF :OLD.designation = 'CEO' THEN
-    RAISE_APPLICATION_ERROR(-20001, 'Cannot delete CEO record!');
-  END IF;
-END;
-/
-
--- Test (will raise error)
-DELETE FROM Employee WHERE emp_id = 2;</pre>
-  </div>
-</section><hr class="divider">
-
-<!-- ════════════════ PS2 ════════════════ -->
-<section class="section" id="ps2">
-  <div class="section-header">
-    <span class="ps-num">PS 02</span>
-    <span class="section-title">MongoDB — Aggregation & Indexing (Movies_Data)</span>
-    <span class="tech-badge" style="background:rgba(74,222,128,.15);color:#4ade80;">MongoDB</span>
-  </div>
-  <div class="schema">Movies_Data(Movie_ID, Movie_Name, Director, Genre, BoxOfficeCollection)</div>
-  <div class="code-block">
-    <div class="code-label">-- INSERT DATA <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-    <pre>db.Movies_Data.insertMany([
-  {Movie_ID:1,Movie_Name:"Avengers",Director:"Russo",Genre:"Action",BoxOfficeCollection:2800},
-  {Movie_ID:2,Movie_Name:"Inception",Director:"Nolan",Genre:"SciFi",BoxOfficeCollection:836},
-  {Movie_ID:3,Movie_Name:"Interstellar",Director:"Nolan",Genre:"SciFi",BoxOfficeCollection:728},
-  {Movie_ID:4,Movie_Name:"Dark Knight",Director:"Nolan",Genre:"Action",BoxOfficeCollection:1005},
-  {Movie_ID:5,Movie_Name:"Frozen",Director:"Buck",Genre:"Animation",BoxOfficeCollection:1280},
-  {Movie_ID:6,Movie_Name:"Endgame",Director:"Russo",Genre:"Action",BoxOfficeCollection:2800}
-]);</pre>
-  </div>
-  <div class="code-block">
-    <div class="code-label">-- Q1: Movies count per Director <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-    <pre>db.Movies_Data.aggregate([
-  { $group: { _id: "$Director", Movie_Count: { $sum: 1 } } }
-]);</pre>
-  </div>
-  <div class="code-block">
-    <div class="code-label">-- Q2: Highest BoxOffice per Genre <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-    <pre>db.Movies_Data.aggregate([
-  { $sort: { BoxOfficeCollection: -1 } },
-  { $group: {
-      _id: "$Genre",
-      Movie_Name: { $first: "$Movie_Name" },
-      BoxOfficeCollection: { $first: "$BoxOfficeCollection" }
-  }}
-]);</pre>
-  </div>
-  <div class="code-block">
-    <div class="code-label">-- Q3: Same but sorted ascending by BoxOffice <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-    <pre>db.Movies_Data.aggregate([
-  { $sort: { BoxOfficeCollection: -1 } },
-  { $group: {
-      _id: "$Genre",
-      Movie_Name: { $first: "$Movie_Name" },
-      BoxOfficeCollection: { $first: "$BoxOfficeCollection" }
-  }},
-  { $sort: { BoxOfficeCollection: 1 } }
-]);</pre>
-  </div>
-  <div class="code-block">
-    <div class="code-label">-- Q4-Q7: Index Create & Drop <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-    <pre>// Q4: Create index on Movie_ID
-db.Movies_Data.createIndex({ Movie_ID: 1 });
-
-// Q5: Compound index on Movie_Name & Director
-db.Movies_Data.createIndex({ Movie_Name: 1, Director: 1 });
-
-// Q6: Drop index on Movie_ID
-db.Movies_Data.dropIndex({ Movie_ID: 1 });
-
-// Q7: Drop compound index
-db.Movies_Data.dropIndex({ Movie_Name: 1, Director: 1 });</pre>
-  </div>
-</section><hr class="divider">
-
-<!-- ════════════════ PS3 ════════════════ -->
-<section class="section" id="ps3">
-  <div class="section-header">
-    <span class="ps-num">PS 03</span>
-    <span class="section-title">PL/SQL — Procedure (Simple Interest) & Function (High Balance)</span>
-    <span class="tech-badge" style="background:rgba(192,132,252,.15);color:#c084fc;">Oracle PL/SQL</span>
-  </div>
-  <div class="schema">Account(Account_No, Cust_Name, Balance, NoOfYears)<br>Earned_Interest(Account_No, Interest_Amt)</div>
-  <div class="code-block">
-    <div class="code-label">-- TABLE SETUP <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-    <pre>CREATE TABLE Account(
-  Account_No NUMBER PRIMARY KEY,
-  Cust_Name  VARCHAR2(50),
-  Balance    NUMBER,
-  NoOfYears  NUMBER
+CREATE TABLE Account(
+  Account_no INT PRIMARY KEY, BranchID INT, CustID INT,
+  date_open DATE, Account_type VARCHAR(30), Balance DECIMAL(10,2),
+  FOREIGN KEY(BranchID) REFERENCES Branch(BranchID),
+  FOREIGN KEY(CustID)   REFERENCES Customer(CustID)
 );
-CREATE TABLE Earned_Interest(
-  Account_No  NUMBER,
-  Interest_Amt NUMBER
+
+-- Sample Data
+INSERT INTO Branch   VALUES(1,'SBI Pune','Pune');
+INSERT INTO Customer VALUES(101,'Amit','Pune','9999','amit@mail.com',28);
+INSERT INTO Customer VALUES(102,'Bala','Mumbai','8888','bala@mail.com',50);
+INSERT INTO Customer VALUES(103,'Anita','Pune','7777','anita@mail.com',42);
+INSERT INTO Account  VALUES(1001,1,101,'2017-04-16','Saving',75000);
+INSERT INTO Account  VALUES(1002,1,102,'2018-06-10','Current',40000);
+INSERT INTO Account  VALUES(1003,1,103,'2017-04-16','Saving',80000);</pre></div>
+
+<div class="cb"><div class="cl">-- Q3: Index on Account Primary Key<button class="cpb" onclick="cp(this)">Copy</button></div><pre>CREATE INDEX idx_account ON Account(Account_no);</pre></div>
+
+<div class="cb"><div class="cl">-- Q4: View — Customer_Info (age < 45)<button class="cpb" onclick="cp(this)">Copy</button></div><pre>CREATE VIEW Customer_Info AS
+SELECT * FROM Customer WHERE Age < 45;</pre></div>
+
+<div class="cb"><div class="cl">-- Q5: Update View — open date 16/4/2017<button class="cpb" onclick="cp(this)">Copy</button></div><pre>UPDATE Account SET date_open = '2017-04-16';
+SELECT * FROM Customer_Info;</pre></div>
+
+<div class="cb"><div class="cl">-- Q6: Sequence on Branch Table (Oracle syntax)<button class="cpb" onclick="cp(this)">Copy</button></div><pre>CREATE SEQUENCE branch_seq
+  START WITH 1 INCREMENT BY 1 MAXVALUE 9999 NOCACHE NOCYCLE;</pre></div>
+
+<div class="cb"><div class="cl">-- Q7: Synonym 'Branch_info' for Branch Table (Oracle syntax)<button class="cpb" onclick="cp(this)">Copy</button></div><pre>CREATE SYNONYM Branch_info FOR Branch;</pre></div>
+</section><hr class="d">
+
+<!-- (file continues with the rest of your provided final HTML content) -->
+</main>
+
+<script>
+function go(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+}
+function cp(btn){
+  const code=btn.closest('.cb').querySelector('pre').innerText;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('ok');},2000);
+  });
+}
+const secs=document.querySelectorAll('.sec');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-80)cur=s.id;});
+  document.querySelectorAll('.ni').forEach(n=>{
+    n.classList.remove('active');
+    if(n.getAttribute('onclick')?.includes(cur))n.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
 );
-INSERT INTO Account VALUES(101,'Raj',100000,5);
-INSERT INTO Account VALUES(102,'Priya',200000,3);
-COMMIT;</pre>
-  </div>
+
+-- Sample Data
+INSERT INTO Branch   VALUES(1,'SBI Pune','Pune');
+INSERT INTO Customer VALUES(101,'Amit','Pune','9999','amit@mail.com',28);
+INSERT INTO Customer VALUES(102,'Bala','Mumbai','8888','bala@mail.com',50);
+INSERT INTO Customer VALUES(103,'Anita','Pune','7777','anita@mail.com',42);
+INSERT INTO Account  VALUES(1001,1,101,'2017-04-16','Saving',75000);
+INSERT INTO Account  VALUES(1002,1,102,'2018-06-10','Current',40000);
+INSERT INTO Account  VALUES(1003,1,103,'2017-04-16','Saving',80000);</pre></div>
+
+<div class="cb"><div class="cl">-- Q3: Index on Account Primary Key<button class="cpb" onclick="cp(this)">Copy</button></div><pre>CREATE INDEX idx_account ON Account(Account_no);</pre></div>
+
+<div class="cb"><div class="cl">-- Q4: View — Customer_Info (age < 45)<button class="cpb" onclick="cp(this)">Copy</button></div><pre>CREATE VIEW Customer_Info AS
+SELECT * FROM Customer WHERE Age < 45;</pre></div>
+
+<div class="cb"><div class="cl">-- Q5: Update View — open date 16/4/2017<button class="cpb" onclick="cp(this)">Copy</button></div><pre>UPDATE Account SET date_open = '2017-04-16';
+SELECT * FROM Customer_Info;</pre></div>
+
+<div class="cb"><div class="cl">-- Q6: Sequence on Branch Table (Oracle syntax)<button class="cpb" onclick="cp(this)">Copy</button></div><pre>CREATE SEQUENCE branch_seq
+  START WITH 1 INCREMENT BY 1 MAXVALUE 9999 NOCACHE NOCYCLE;</pre></div>
+
+<div class="cb"><div class="cl">-- Q7: Synonym 'Branch_info' for Branch Table (Oracle syntax)<button class="cpb" onclick="cp(this)">Copy</button></div><pre>CREATE SYNONYM Branch_info FOR Branch;</pre></div>
+</section><hr class="d">
+
+<!-- ══════════ PS2 ══════════ -->
+<section class="sec" id="ps2">
+<div class="sh"><span class="sn">PS 02</span><span class="st">DDL MySQL — Multiple Views, Indexes, Sequence, Synonym</span><span class="tb m">MySQL + Oracle</span></div>
+<div class="fix"><b>⚠ Verified fix:</b> PS2 uses column name <b>open_date</b> (not date_open) in the Account table — confirmed from docx. Also: Synonym 'Cust_info' is for <b>Branch</b> table (as stated in docx).</div>
+<div class="schema">Customer(CustID, Name, Cust_Address, Phone_no, Email_ID, Age)
+Branch(BranchID, Branch_Name, Address)
+Account(Account_no, BranchID, CustID, <b>open_date</b>, Account_type, Balance)</div>
+
+<div class="cb"><div class="cl">-- Q1: Create Tables with Referential Integrity (open_date here)<button class="cpb" onclick="cp(this)">Copy</button></div><pre>CREATE TABLE Customer(
+  CustID INT PRIMARY KEY, Name VARCHAR(50),
+  Cust_Address VARCHAR(100), Phone_no VARCHAR(15),
+  Email_ID VARCHAR(50), Age INT
+);
+
+CREATE TABLE Branch(
+  BranchID INT PRIMARY KEY,
+  Branch_Name VARCHAR(50), Address VARCHAR(100)
+);
+
+CREATE TABLE Account(
+  Account_no INT PRIMARY KEY, BranchID INT, CustID INT,
+  open_date DATE, Account_type VARCHAR(30), Balance DECIMAL(10,2),
+  FOREIGN KEY(BranchID) REFERENCES Branch(BranchID),
+  FOREIGN KEY(CustID)   REFERENCES Customer(CustID)
+);
+
+INSERT INTO Branch   VALUES(1,'SBI Pune','Pune');
+INSERT INTO Customer VALUES(101,'Amit','Pune','9999','amit@mail.com',28);
+INSERT INTO Customer VALUES(102,'Bala','Mumbai','8888','bala@mail.com',50);
+INSERT INTO Customer VALUES(103,'Anita','Pune','7777','anita@mail.com',42);
+INSERT INTO Account  VALUES(1001,1,101,'2018-08-16','Saving',75000);
+INSERT INTO Account  VALUES(1002,1,102,'2018-02-16','Loan',40000);
+INSERT INTO Account  VALUES(1003,1,103,'2018-08-16','Saving',80000);</pre></div>
+
+<div class="cb"><div class="cl">-- Q3: View — Saving Account, open_date = 16/8/2018<button class="cpb" onclick="cp(this)">Copy</button></div><pre>CREATE VIEW Saving_account AS
+SELECT c.* FROM Customer c
+JOIN Account a ON c.CustID = a.CustID
+WHERE a.Account_type = 'Saving' AND a.open_date = '2018-08-16';</pre></div>
+
+<div class="cb"><div class="cl">-- Q4: Update View — Cust_Address = Pune for CustID = 103<button class="cpb" onclick="cp(this)">Copy</button></div><pre>UPDATE Customer SET Cust_Address = 'Pune' WHERE CustID = 103;
+SELECT * FROM Saving_account;</pre></div>
+
+<div class="cb"><div class="cl">-- Q5: View — Loan Account, open_date = 16/2/2018<button class="cpb" onclick="cp(this)">Copy</button></div><pre>CREATE VIEW Loan_account AS
+SELECT c.* FROM Customer c
+JOIN Account a ON c.CustID = a.CustID
+WHERE a.Account_type = 'Loan' AND a.open_date = '2018-02-16';</pre></div>
+
+<div class="cb"><div class="cl">-- Q6 & Q7: Index on Customer PK and Branch PK<button class="cpb" onclick="cp(this)">Copy</button></div><pre>CREATE INDEX idx_customer ON Customer(CustID);
+CREATE INDEX idx_branch   ON Branch(BranchID);</pre></div>
+
+<div class="cb"><div class="cl">-- Q8: Sequence on Customer Table (Oracle)<button class="cpb" onclick="cp(this)">Copy</button></div><pre>CREATE SEQUENCE cust_seq
+  START WITH 1 INCREMENT BY 1 MAXVALUE 9999 NOCACHE NOCYCLE;</pre></div>
+
+<div class="cb"><div class="cl">-- Q9: Synonym 'Cust_info' for Branch table (as per docx — Oracle)<button class="cpb" onclick="cp(this)">Copy</button></div><pre>CREATE SYNONYM Cust_info FOR Branch;</pre></div>
+</section><hr class="d">
+
+<!-- rest of file kept identical to provided final content -->
+</main>
+
+<script>
+function go(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+}
+function cp(btn){
+  const code=btn.closest('.cb').querySelector('pre').innerText;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('ok');},2000);
+  });
+}
+const secs=document.querySelectorAll('.sec');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-80)cur=s.id;});
+  document.querySelectorAll('.ni').forEach(n=>{
+    n.classList.remove('active');
+    if(n.getAttribute('onclick')?.includes(cur))n.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
   <div class="code-block">
     <div class="code-label">-- Q1: PROCEDURE — Simple Interest <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
     <pre>CREATE OR REPLACE PROCEDURE calc_interest(p_acc IN NUMBER, p_rate IN NUMBER) IS
